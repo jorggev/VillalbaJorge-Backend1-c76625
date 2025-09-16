@@ -6,7 +6,7 @@ class CartManager {
     this.pathFile = pathFile;
   }
 
-  async #readFile() {
+  async readFile() {
     try {
       const data = await fs.readFile(this.pathFile, "utf-8");
       return JSON.parse(data);
@@ -15,25 +15,25 @@ class CartManager {
     }
   }
 
-  async #writeFile(carts) {
+  async writeFile(carts) {
     await fs.writeFile(this.pathFile, JSON.stringify(carts, null, 2), "utf-8");
   }
 
   async createCart() {
-    const carts = await this.#readFile();
+    const carts = await this.readFile();
     const newCart = { id: crypto.randomUUID(), products: [] };
     carts.push(newCart);
-    await this.#writeFile(carts);
+    await this.writeFile(carts);
     return newCart;
   }
 
   async getCartById(id) {
-    const carts = await this.#readFile();
+    const carts = await this.readFile();
     return carts.find((c) => c.id === id);
   }
 
   async addProductToCart(cid, pid) {
-    const carts = await this.#readFile();
+    const carts = await this.readFile();
     const index = carts.findIndex((c) => c.id === cid);
     if (index === -1) throw new Error("Carrito no encontrado");
 
@@ -47,7 +47,7 @@ class CartManager {
     }
 
     carts[index] = cart;
-    await this.#writeFile(carts);
+    await this.writeFile(carts);
     return cart;
   }
 }

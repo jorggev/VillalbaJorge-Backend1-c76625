@@ -1,0 +1,57 @@
+[
+  {
+    "id": "b1e1a7e2-1a2b-4c3d-8e9f-123456789001",
+    "title": "Heladera",
+    "description": "Heladera familiar con freezer superior",
+    "code": "HEL-001",
+    "price": 350000,
+    "status": true,
+    "stock": 12,
+    "category": "Cocina",
+    "thumbnails": "sin imagen"
+  },
+  {
+    "id": "b1e1a7e2-1a2b-4c3d-8e9f-123456789002",
+    "title": "Lavarropas Automático",
+    "description": "Lavarropas carga frontal con 8kg de capacidad y múltiples programas",
+    "code": "LAV-002",
+    "price": 280000,
+    "status": true,
+    "stock": 7,
+    "category": "Lavado",
+    "thumbnails": "sin imagen"
+  },
+  {
+    "id": "b1e1a7e2-1a2b-4c3d-8e9f-123456789003",
+    "title": "Microondas Digital",
+    "description": "Microondas digital con grill, 20 litros de capacidad",
+    "code": "MIC-003",
+    "price": 85000,
+    "status": true,
+    "stock": 20,
+    "category": "Cocina",
+    "thumbnails": "sin imagen"
+  },
+  {
+    "id": "b1e1a7e2-1a2b-4c3d-8e9f-123456789004",
+    "title": "Aire Acondicionado Split",
+    "description": "Aire acondicionado split frío/calor de 3000 frigorías",
+    "code": "AIR-004",
+    "price": 400000,
+    "status": true,
+    "stock": 5,
+    "category": "Climatización",
+    "thumbnails": "sin imagen"
+  },
+  {
+    "id": "b1e1a7e2-1a2b-4c3d-8e9f-123456789005",
+    "title": "Televisor 4K UHD",
+    "description": "Smart TV LED de 50 pulgadas con resolución 4K UHD",
+    "code": "TV-005",
+    "price": 320000,
+    "status": true,
+    "stock": 8,
+    "category": "Entretenimiento",
+    "thumbnails": "sin imagen"
+  }
+]
