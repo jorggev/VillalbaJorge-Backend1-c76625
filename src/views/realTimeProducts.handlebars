@@ -1,0 +1,66 @@
+<div class="dashboard">
+  <h1 class="dashboard-title">Productos en tiempo real</h1>
+
+  <div class="form-container">
+    <form id="productForm" enctype="multipart/form-data">
+      <input class="form-input" type="text" name="title" placeholder="Nombre del producto" required>
+      <input class="form-input" type="number" name="price" placeholder="Precio" required>
+      <input class="form-input" type="file" name="file" accept="image/*" required>
+      <button class="form-button" type="submit">Agregar Producto</button>
+    </form>
+  </div>
+
+  <div class="product-grid" id="productList">
+  </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  // Renderizar productos
+  socket.on("products", (products) => {
+    const productList = document.getElementById("productList");
+    productList.innerHTML = "";
+    products.forEach(prod => {
+      productList.innerHTML += `
+        <div class="product-card">
+          <div class="product-image-container">
+            <img class="product-image" src="${prod.thumbnail}" alt="">
+          </div>
+          <h2 class="product-title">${prod.title}</h2>
+          <h3 class="product-price">Precio: ${prod.price}</h3>
+          <button onclick="deleteProduct('${prod.id}')">Eliminar</button>
+        </div>
+      `;
+    });
+  });
+
+  // Agregar producto
+  document.getElementById("productForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form);
+
+    // Subir imagen primero vía HTTP
+    const res = await fetch("/api/products/upload", {
+      method: "POST",
+      body: formData
+    });
+    const data = await res.json();
+
+    // Emitir producto por socket
+    socket.emit("addProduct", {
+      title: form.title.value,
+      price: parseInt(form.price.value),
+      thumbnail: data.thumbnail
+    });
+
+    form.reset();
+  });
+
+  // Eliminar producto
+  function deleteProduct(id) {
+    socket.emit("deleteProduct", id);
+  }
+</script>

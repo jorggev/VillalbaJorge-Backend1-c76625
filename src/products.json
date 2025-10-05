@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Teclado",
+    "price": 3500,
+    "thumbnail": "/img/teclado.png"
+  },
+  {
+    "id": 2,
+    "title": "Mouse",
+    "price": 2200,
+    "thumbnail": "/img/mouse.png"
+  },
+  {
+    "id": 3,
+    "title": "Auriculares",
+    "price": 4800,
+    "thumbnail": "/img/auris.jpg"
+  }
+]
