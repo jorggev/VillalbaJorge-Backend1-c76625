@@ -4,16 +4,24 @@ import { Server } from "socket.io";
 import viewsRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js";
 import ProductManager from "./ProductManager.js";
+import connectMongoDB from "./config/db.js";
+import dotenv from "dotenv";
+
+// inicializamos las variables de entorno
+dotenv.config();
 
 const app = express();
-const httpServer = app.listen(3000, () => {
-    console.log("Server is running on port 3000");
+const httpServer = app.listen(process.env.PORT, () => {
+    console.log("Servidor corrieendo en el puerto 3000");
 });
+
 const io = new Server(httpServer);
 
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+connectMongoDB();
 
 // handlebars configuration
 app.engine("handlebars", engine());
