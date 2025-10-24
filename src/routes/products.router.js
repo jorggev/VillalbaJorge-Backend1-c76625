@@ -22,11 +22,11 @@ productsRouter.get("/", async (req, res) => {
     } catch (error) {
         res.status(500).json({ status: "error", message: " Error al recuperar los datos" })
     }
-})
+}) 
 
 productsRouter.post("/", async (req, res) => {
     try {
-        const { title, price, stock } = req.body;
+        const { title, description, code, price, stock, category} = req.body;
 
         const product = new Product({
             title,
