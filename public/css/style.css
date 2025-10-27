@@ -189,3 +189,33 @@ button:hover, .form-button:hover {
     font-size: 1.5rem;
     color: #4be672;
 }
+
+.pagination {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.page-number {
+  display: inline-block;
+  min-width: 40px;
+  padding: 0.5rem 0.75rem;
+  margin: 0 6px;
+  background: #08306b; /* azul oscuro uniforme */
+  color: #ffffff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.page-number:hover {
+  transform: translateY(-3px);
+  background: #062752;
+}
+
+/* si quieres marcar el número activo manualmente, usa .page-number.active */
+.page-number.active {
+  background: #0b57a0;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.45);
+}

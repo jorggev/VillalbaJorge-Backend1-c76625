@@ -1,59 +1,37 @@
 import express from "express";
-import { engine } from "express-handlebars";
-import { Server } from "socket.io";
-import viewsRouter from "./routes/views.router.js";
 import productsRouter from "./routes/products.router.js";
-import ProductManager from "./ProductManager.js";
 import connectMongoDB from "./config/db.js";
 import dotenv from "dotenv";
+import cartRouter from "./routes/cart.router.js";
+import { engine } from "express-handlebars";
+import viewsRouter from "./routes/views.router.js";
+import cors from "cors";
+import __dirname from "../dirname.js";
 
-// inicializamos las variables de entorno
-dotenv.config();
+//inicializamos las variables de entorno
+dotenv.config({ path: __dirname + "/.env" });
 
 const app = express();
-const httpServer = app.listen(process.env.PORT, () => {
-    console.log("Servidor corrieendo en el puerto 3000");
-});
+const PORT = process.env.PORT;
 
-const io = new Server(httpServer);
-
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+//habilitamos nuestra carpeta public para recursos estaticos
+app.use( express.static( __dirname + "/public") );
+//en el caso de que tengan un front externo
+app.use(cors());
 
 connectMongoDB();
 
-// handlebars configuration
+//handlebars
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
-app.set("views", "./src/views");
+app.set("views", __dirname + "/src/views");
 
-// endpoints
-app.use("/", viewsRouter);
+//endpoints
 app.use("/api/products", productsRouter);
-app.use("/api/carts", cartRouter);
+app.use("/api/cart", cartRouter);
+app.use("/", viewsRouter);
 
-// socket.io config
-const productManager = new ProductManager("./src/products.json");
-
-io.on("connection", async (socket) => {
-    // Enviar productos actuales al conectar
-    const products = await productManager.getProducts();
-    socket.emit("products", products);
-
-    // Agregar producto desde el cliente
-    socket.on("addProduct", async (data) => {
-        await productManager.addProduct(data);
-        const updatedProducts = await productManager.getProducts();
-        io.emit("products", updatedProducts);
-    });
-
-    // Eliminar producto desde el cliente
-    socket.on("deleteProduct", async (id) => {
-        await productManager.deleteProductById(id);
-        const updatedProducts = await productManager.getProducts();
-        io.emit("products", updatedProducts);
-    });
-});
-
-export { io };
+app.listen(PORT, ()=> {
+  console.log("Servidor iniciado correctamente!");
+})

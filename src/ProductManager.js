@@ -40,7 +40,7 @@ class ProductManager{
 
       return products;
     } catch (error) {
-      
+      return [];
     }
   }
 
