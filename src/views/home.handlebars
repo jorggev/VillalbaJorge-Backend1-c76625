@@ -1,21 +1,49 @@
 <div class="dashboard">
   <h1 class="dashboard-title">Home: Productos existentes</h1>
 
+  <button id="cart-toggle" class="cart-toggle" aria-label="Abrir carrito">
+    Carrito (<span id="cart-count">0</span>)
+  </button>
+
   <div class="product-grid">
     {{#each products}}
-      <div class="product-card">
-        <div class="product-image-container">
+    <div class="product-card" data-id="{{this._id}}" data-title="{{this.title}}" data-price="{{this.price}}"
+      data-thumbnail="{{this.thumbnail}}">
+      <div class="product-image-container">
+        <a href="/products/{{this._id}}">
           <img class="product-image" src="{{this.thumbnail}}" alt="{{this.title}}">
-        </div>
-        <h2 class="product-title">{{this.title}}</h2>
-        <h3 class="product-price">Precio: {{this.price}}</h3>
+        </a>
       </div>
+      <h2 class="product-title"><a href="/products/{{this._id}}" style="color:inherit;text-decoration:none">{{this.title}}</a>
+      </h2>
+      <h3 class="product-price">Precio: {{this.price}}</h3>
+
+      <button class="add-to-cart" type="button" data-id="{{this._id}}" data-title="{{this.title}}"
+        data-price="{{this.price}}" data-thumbnail="{{this.thumbnail}}">
+        Agregar al carrito
+      </button>
+    </div>
     {{/each}}
   </div>
 
   <div class="pagination">
     {{#each links}}
-       <a class="page-number" href="{{this.link}}">{{this.text}}</a>
+    <a class="page-number" href="{{this.link}}">{{this.text}}</a>
     {{/each}}
   </div>
 </div>
+
+<aside id="cart-panel" class="cart-panel" aria-hidden="true">
+  <header class="cart-header">
+    <h2>Tu carrito</h2>
+    <button id="cart-close" aria-label="Cerrar carrito">×</button>
+  </header>
+  <div id="cart-items" class="cart-items"></div>
+  <footer class="cart-footer">
+    <div class="cart-total">Total: <span id="cart-total">0</span></div>
+    <button id="cart-clear" type="button">Vaciar carrito</button>
+    <button id="checkout" type="button">Ir al checkout</button>
+  </footer>
+</aside>
+
+<script src="/js/cart-client.js"></script>

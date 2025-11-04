@@ -15,6 +15,7 @@ class CartManager {
     }
 
 
+    
     addCart = async () => {
         const cartsJson = await fs.promises.readFile(this.path, "utf-8");
         const carts = JSON.parse(cartsJson);
@@ -27,7 +28,7 @@ class CartManager {
         return carts;
     }
 
-
+    // getProductsInCartById es para obtener los productos de un carrito por su ID
     getProductsInCartById = async (cid) => {
         const cartsJson = await fs.promises.readFile(this.path, "utf-8");
         const carts = JSON.parse(cartsJson);
@@ -37,7 +38,7 @@ class CartManager {
     }
 
 
-    // addProductToCart
+    // addProductToCart es para agregar un producto a un carrito
     addProductToCart = async (cid, pid, quantity) => {
         const cartsJson = await fs.promises.readFile(this.path, "utf-8");
         const carts = JSON.parse(cartsJson);

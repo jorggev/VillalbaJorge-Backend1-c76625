@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Definimos el esquema para el carrito de compras
 const cartSchema = new mongoose.Schema({
     products: {
         type: [

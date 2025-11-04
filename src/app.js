@@ -15,6 +15,8 @@ const app = express();
 const PORT = process.env.PORT;
 
 app.use(express.json());
+//  para parsear formularios HTML
+app.use(express.urlencoded({ extended: true })); 
 //habilitamos nuestra carpeta public para recursos estaticos
 app.use( express.static( __dirname + "/public") );
 //en el caso de que tengan un front externo

@@ -1,0 +1,44 @@
+<div class="dashboard">
+  <h1 class="dashboard-title">{{product.title}}</h1>
+
+  <button id="cart-toggle" class="cart-toggle" aria-label="Abrir carrito">
+    Carrito (<span id="cart-count">0</span>)
+  </button>
+
+  <div class="product-card" data-id="{{product._id}}" data-title="{{product.title}}" data-price="{{product.price}}" data-thumbnail="{{product.thumbnail}}">
+    <div class="product-image-container">
+      <img class="product-image" src="{{product.thumbnail}}" alt="{{product.title}}">
+    </div>
+    <h2 class="product-title">{{product.title}}</h2>
+    <h3 class="product-price">Precio: {{product.price}}</h3>
+    <p class="product-description">{{product.description}}</p>
+    <p>Stock: {{product.stock}}</p>
+    <p>Categoria: {{product.category}}</p>
+
+    <div class="product-actions">
+      <a href="/" class="back-button">Volver</a>
+      <button class="add-to-cart" type="button"
+        data-id="{{product._id}}"
+        data-title="{{product.title}}"
+        data-price="{{product.price}}"
+        data-thumbnail="{{product.thumbnail}}">
+        Agregar al carrito
+      </button>
+    </div>
+  </div>
+</div>
+
+<aside id="cart-panel" class="cart-panel" aria-hidden="true">
+  <header class="cart-header">
+    <h2>Tu carrito</h2>
+    <button id="cart-close" aria-label="Cerrar carrito">×</button>
+  </header>
+  <div id="cart-items" class="cart-items"></div>
+  <footer class="cart-footer">
+    <div class="cart-total">Total: <span id="cart-total">0</span></div>
+    <button id="cart-clear" type="button">Vaciar carrito</button>
+    <button id="checkout" type="button">Ir al checkout</button>
+  </footer>
+</aside>
+
+<script src="/js/cart-client.js"></script>

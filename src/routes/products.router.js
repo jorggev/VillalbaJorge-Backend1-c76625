@@ -4,6 +4,7 @@ import uploader from "../utils/uploader.js";
 
 const productsRouter = express.Router();
 
+// Obtener todos los productos con paginación
 productsRouter.get("/", async (req, res) => {
     try {
         const { limit = 10, page = 1 } = req.query;
@@ -18,6 +19,7 @@ productsRouter.get("/", async (req, res) => {
     }
 });
 
+// Obtener un producto por su ID
 productsRouter.get("/:pid", async (req, res) => {
     try {
         const pid = req.params.pid;
@@ -31,18 +33,32 @@ productsRouter.get("/:pid", async (req, res) => {
     }
 })
 
-productsRouter.post("/", async(req, res)=> {
-  try {
-    const { title, description, image, price, stock, category } = req.body;
+// Agregar un nuevo producto
+productsRouter.post("/", async (req, res) => {
+    try {
+        const { title, description, image, price, stock, category } = req.body;
 
-    const product = new Product({ title, description, image, price, stock, category });
-    await product.save();
-    res.status(201).json({ status: "success", payload: product });
-  } catch (error) {
-    res.status(500).json({ status: "error", message: "Error al agregar un producto" });
-  }
+        if (!title || price === undefined) {
+            return res.status(400).json({ status: "error", message: "title y price son requeridos" });
+        }
+
+        const product = new Product({
+            title,
+            description: description || "",
+            thumbnail: image || "",
+            price: Number(price),
+            stock: Number(stock) || 0,
+            category: category || ""
+        });
+
+        await product.save();
+        res.status(201).json({ status: "success", payload: product });
+    } catch (error) {
+        res.status(500).json({ status: "error", message: "Error al agregar un producto" });
+    }
 });
 
+// Actualizar un producto existente
 productsRouter.put("/:pid", async (req, res) => {
     try {
         const pid = req.params.pid;
@@ -57,6 +73,7 @@ productsRouter.put("/:pid", async (req, res) => {
     }
 });
 
+// Eliminar un producto
 productsRouter.delete("/:pid", async (req, res) => {
     try {
         const pid = req.params.pid;
