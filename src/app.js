@@ -7,6 +7,9 @@ import { engine } from "express-handlebars";
 import viewsRouter from "./routes/views.router.js";
 import cors from "cors";
 import __dirname from "../dirname.js";
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
+import sessionsRouter from "./routes/sessions.router.js";
 
 //inicializamos las variables de entorno
 dotenv.config({ path: __dirname + "/.env" });
@@ -24,6 +27,10 @@ app.use(cors());
 
 connectMongoDB();
 
+// inicializar passport
+initializePassport(passport);
+app.use(passport.initialize());
+
 //handlebars
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
@@ -32,6 +39,7 @@ app.set("views", __dirname + "/src/views");
 //endpoints
 app.use("/api/products", productsRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/sessions", sessionsRouter); // <-- nueva ruta
 app.use("/", viewsRouter);
 
 app.listen(PORT, ()=> {
