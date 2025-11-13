@@ -34,12 +34,60 @@ body {
 }
 
 .dashboard-title {
+
+}
+
+/* Estilos para la barra superior y el enlace "Inicio" */
+.top-nav{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start; /* CAMBIO: alinear elementos a la izquierda para que login quede al lado */
+    padding:16px 2rem;
+    gap:12px;
+}
+
+/* Nav-user junto al logo */
+.top-nav .nav-user{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-left:8px; /* separación ligera respecto al logo */
+}
+
+/* Reutilizar estilo del botón logo para los enlaces dentro de nav-user */
+.top-nav .nav-user a,
+.top-nav .logo {
+    display:inline-block;
+    padding:8px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:700;
+    color:var(--button-text-dark);
+    background: linear-gradient(180deg, var(--accent-2), #005bd6);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* Mantener color consistente para links visitados en toda la app */
+a, a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Opcional: hover/active para enlaces en nav */
+.top-nav .nav-user a:hover,
+.top-nav .logo:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(0,0,0,0.55);
+}
+
+/* Ajuste del título de las páginas de auth para mejor apariencia en login */
+.dashboard .dashboard-title{
+    margin-top: 0.25rem;
+    margin-bottom: 1rem;
+    font-size: 1.9rem; /* ligeramente menor que en home */
     text-align: center;
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    letter-spacing: 1px;
     color: var(--accent);
+    
 }
 
 /* Botones */
@@ -85,6 +133,11 @@ button:hover,
     padding: 0.5rem 0.9rem;
     border-radius: 10px;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* Ocultar botón del carrito por defecto hasta que el cliente verifique sesión */
+.cart-toggle {
+  display: none;
 }
 
 /* Grid de productos */
@@ -380,4 +433,10 @@ button:hover,
     .cart-panel.open {
         right: 0;
     }
+}
+
+@media (max-width:600px){
+    .top-nav{ padding:12px 1rem; }
+    .top-nav .logo{ padding:6px 10px; font-size:0.95rem; }
+    .dashboard .dashboard-title{ font-size:1.6rem; }
 }

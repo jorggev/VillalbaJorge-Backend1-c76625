@@ -7,28 +7,28 @@
 
   <div class="product-grid">
     {{#each products}}
-    <div class="product-card" data-id="{{this._id}}" data-title="{{this.title}}" data-price="{{this.price}}"
-      data-thumbnail="{{this.thumbnail}}">
-      <div class="product-image-container">
-        <a href="/products/{{this._id}}">
-          <img class="product-image" src="{{this.thumbnail}}" alt="{{this.title}}">
-        </a>
+      <div class="product-card" data-id="{{this._id}}" data-title="{{this.title}}" data-price="{{this.price}}">
+        <div class="product-image-container">
+          <a href="/products/{{this._id}}">
+            <img class="product-image" src="{{this.thumbnail}}" alt="{{this.title}}">
+          </a>
+        </div>
+        <h2 class="product-title"><a href="/products/{{this._id}}">{{this.title}}</a></h2>
+        <h3 class="product-price">Precio: {{this.price}}</h3>
+        <button class="add-to-cart" type="button"
+                data-id="{{this._id}}"
+                data-title="{{this.title}}"
+                data-price="{{this.price}}"
+                data-thumbnail="{{this.thumbnail}}">
+          Agregar al carrito
+        </button>
       </div>
-      <h2 class="product-title"><a href="/products/{{this._id}}" style="color:inherit;text-decoration:none">{{this.title}}</a>
-      </h2>
-      <h3 class="product-price">Precio: {{this.price}}</h3>
-
-      <button class="add-to-cart" type="button" data-id="{{this._id}}" data-title="{{this.title}}"
-        data-price="{{this.price}}" data-thumbnail="{{this.thumbnail}}">
-        Agregar al carrito
-      </button>
-    </div>
     {{/each}}
   </div>
 
   <div class="pagination">
     {{#each links}}
-    <a class="page-number" href="{{this.link}}">{{this.text}}</a>
+      <a class="page-number" href="{{this.link}}">{{this.text}}</a>
     {{/each}}
   </div>
 </div>

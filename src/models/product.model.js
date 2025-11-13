@@ -9,7 +9,6 @@ const productSchema = new mongoose.Schema({
     price: Number,
     stock: Number,
     category: { type: String, index: true },
-    // Agregamos un campo 'code' único para que cada producto tenga un identificador único
     code: {
         type: String,
         unique: true,

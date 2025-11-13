@@ -18,7 +18,7 @@ export default function initializePassport(passport) {
       async (email, password, done) => {
         try {
           const user = await User.findOne({ email }).exec();
-          if (!user) return done(null, false, { message: "User not found" });
+          if (!user) return done(null, false, { message: "Usuario no existe" });
           const valid = User.isValidPassword(user, password);
           if (!valid) return done(null, false, { message: "Invalid credentials" });
           return done(null, user);
@@ -29,7 +29,7 @@ export default function initializePassport(passport) {
     )
   );
 
-  // JWT strategy para rutas protegidas (current)
+  // JWT strategy
   passport.use(
     "jwt",
     new JwtStrategy(

@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
     const exists = await User.findOne({ email });
     if (exists) return res.status(409).json({ status: "error", message: "Email ya registrado" });
 
-    // crear carrito para el usuario (opcional pero recomendado)
+    // crear carrito para el usuario
     const cart = new Cart();
     await cart.save();
 
@@ -40,27 +40,35 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Login (genera JWT)
-router.post(
-  "/login",
-  passport.authenticate("login", { session: false }),
-  async (req, res) => {
+// Login (modificado para callback y respuestas JSON claras)
+router.post("/login", (req, res, next) => {
+  passport.authenticate("login", { session: false }, async (err, user, info) => {
     try {
-      const user = req.user;
+      if (err) return res.status(500).json({ status: "error", message: err.message });
+      if (!user) {
+        const message = info?.message || "Credenciales inválidas";
+        // si el mensaje indica usuario no encontrado, devolver 404 para sugerir registro
+        if (/(Usuario no existe)/i.test(message)) {
+          return res.status(404).json({ status: "error", message });
+        }
+        return res.status(401).json({ status: "error", message });
+      }
+
+      // usuario autenticado: generar JWT
       const payload = { id: user._id, email: user.email, role: user.role };
       const token = jwt.sign(payload, process.env.JWT_SECRET || "CHANGE_ME_SECRET", {
-        expiresIn: process.env.JWT_EXPIRES || "1h"
+        expiresIn: process.env.JWT_EXPIRES || "1h",
       });
+
       return res.json({ status: "success", token, payload });
     } catch (error) {
       return res.status(500).json({ status: "error", message: error.message });
     }
-  }
-);
+  })(req, res, next);
+});
 
 // Ruta /current protegida por JWT
 router.get("/current", passport.authenticate("jwt", { session: false }), (req, res) => {
-  // passport ya dejó el usuario en req.user (sin password por la estrategia)
   return res.json({ status: "success", payload: req.user });
 });
 

@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: "user" }
 });
 
-// helper para hashear y verificar
+// hashear y verificar
 userSchema.statics.createHash = function (password) {
   const saltRounds = 10; // puedes cambiar si hace falta
   return bcrypt.hashSync(password, saltRounds);
